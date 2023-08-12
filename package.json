@@ -1,0 +1,29 @@
+{
+  "name": "@canterbury-air-patrol/speed-time-distance",
+  "version": "0.0.1",
+  "description": "Speed Time Distance Calculator",
+  "main": "speed-time-distance.js",
+  "scripts": {
+    "check": "eslint *.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/canterbury-air-patrol/speed-time-distance.git"
+  },
+  "keywords": [
+    "speed",
+    "time",
+    "distance"
+  ],
+  "author": "Scott Parlane",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/canterbury-air-patrol/speed-time-distance/issues"
+  },
+  "homepage": "https://github.com/canterbury-air-patrol/speed-time-distance#readme",
+  "devDependencies": {
+    "eslint": "~8.44.0",
+    "standard": "~17.1.0"
+  }
+}
