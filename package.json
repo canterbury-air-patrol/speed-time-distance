@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/canterbury-air-patrol/speed-time-distance#readme",
   "devDependencies": {
-    "eslint": "~8.44.0",
+    "eslint": "~8.47.0",
     "standard": "~17.1.0"
   }
 }
