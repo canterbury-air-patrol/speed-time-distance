@@ -1,4 +1,4 @@
-class speed {
+class Speed {
   constructor (speed, units) {
     this.speed_m_s = 0.0
     this.setSpeed(speed, units)
@@ -27,7 +27,7 @@ class speed {
   }
 }
 
-class distance {
+class Distance {
   constructor (distance, units) {
     this.distance_m = 0
     this.setDistance(distance, units)
@@ -58,7 +58,7 @@ class distance {
   }
 }
 
-class time {
+class Time {
   constructor (timeSeconds) {
     this.timeSeconds = timeSeconds
   }
@@ -88,4 +88,4 @@ class time {
   }
 }
 
-export { speed, time, distance }
+export { Speed, Time, Distance }
