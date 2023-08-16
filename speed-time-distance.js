@@ -1,6 +1,7 @@
 class Speed {
   constructor (speed, units) {
     this.speed_m_s = 0.0
+    this.units = units
     this.setSpeed(speed, units)
   }
 
@@ -12,10 +13,18 @@ class Speed {
   }
 
   speed_to_m_s (units) {
-    if (units in this.speedUnits) {
-      return this.speedUnits[units]
+    if (units in Speed.speedUnits) {
+      return Speed.speedUnits[units]
     }
     return 1
+  }
+
+  get speed () {
+    return this.getSpeed(this.currentUnits)
+  }
+
+  set speed (value) {
+    this.setSpeed(value, this.currentUnits)
   }
 
   getSpeed (units) {
@@ -30,6 +39,7 @@ class Speed {
 class Distance {
   constructor (distance, units) {
     this.distance_m = 0
+    this.currentUnits = units
     this.setDistance(distance, units)
   }
 
@@ -43,10 +53,18 @@ class Distance {
   }
 
   distance_units_to_m (units) {
-    if (units in this.distanceUnits) {
-      return this.distanceUnits[units]
+    if (units in Distance.distanceUnits) {
+      return Distance.distanceUnits[units]
     }
     return 1
+  }
+
+  get distance () {
+    return this.distance_m / this.distance_units_to_m(this.currentUnits)
+  }
+
+  set distance (value) {
+    this.setDistance(value, this.currentUnits)
   }
 
   getDistance (units) {
@@ -59,32 +77,40 @@ class Distance {
 }
 
 class Time {
-  constructor (timeSeconds) {
-    this.timeSeconds = timeSeconds
+  constructor (value, units) {
+    this.timeSeconds = 0
+    this.currentUnits = units
+    this.setTime(value, units)
   }
 
-  get seconds () {
-    return this.timeSeconds
+  static timeUnits = {
+    seconds: 1,
+    minutes: 60,
+    hours: 3600,
+    days: 86400
   }
 
-  set seconds (timeSeconds) {
-    this.time_s = timeSeconds
+  get time () {
+    return this.getTime(this.currentUnits)
   }
 
-  get minutes () {
-    return this.timeSeconds / 60
+  set time (value) {
+    this.setTime(value, this.currentUnits)
   }
 
-  set minutes (timeMinutes) {
-    this.timeSeconds = timeMinutes * 60
+  timeUnitsToSeconds (units) {
+    if (units in Time.timeUnits) {
+      return Time.timeUnits[units]
+    }
+    return 1
   }
 
-  get hours () {
-    return this.timeSeconds / 3600
+  getTime (units) {
+    return this.timeSeconds / this.timeUnitsToSeconds(units)
   }
 
-  set hours (timeHours) {
-    this.timeSeconds = timeHours * 3600
+  setTime (value, units) {
+    this.timeSeconds = value * this.timeUnitsToSeconds(units)
   }
 }
 
