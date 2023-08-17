@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { Table } from 'react-bootstrap'
+import Form from 'react-bootstrap/Form'
+
 import { Speed, Distance, Time } from './speed-time-distance'
 
 class SpeedUI extends React.Component {
@@ -49,10 +52,10 @@ class SpeedUI extends React.Component {
     }
     return (
       <>
-        <input type='number' onChange={this.handleChangeValue} value={this.state.speed.speed} readOnly={this.props.locked} />
-        <select onChange={this.handleChangeUnits}>
+        <Form.Control type='number' onChange={this.handleChangeValue} value={this.state.speed.speed} disabled={this.props.locked} />
+        <Form.Select onChange={this.handleChangeUnits} defaultValue={this.state.speed.currentUnits}>
           {units}
-        </select>
+        </Form.Select>
       </>
     )
   }
@@ -110,10 +113,10 @@ class DistanceUI extends React.Component {
 
     return (
       <>
-        <input type='number' onChange={this.handleChangeValue} value={this.state.distance.distance} readOnly={this.props.locked} />
-        <select onChange={this.handleChangeUnits}>
+        <Form.Control type='number' onChange={this.handleChangeValue} value={this.state.distance.distance} disabled={this.props.locked} />
+        <Form.Select onChange={this.handleChangeUnits}>
           {units}
-        </select>
+        </Form.Select>
       </>
     )
   }
@@ -171,10 +174,10 @@ class TimeUI extends React.Component {
 
     return (
       <>
-        <input type='number' onChange={this.handleChangeValue} value={this.state.time.time} readOnly={this.props.locked} />
-        <select onChange={this.handleChangeUnits}>
+        <Form.Control type='number' onChange={this.handleChangeValue} value={this.state.time.time} disabled={this.props.locked} />
+        <Form.Select onChange={this.handleChangeUnits} defaultValue={this.state.time.currentUnits}>
           {units}
-        </select>
+        </Form.Select>
       </>
     )
   }
@@ -257,21 +260,28 @@ class SpeedTimeDistanceUI extends React.Component {
     let selector = null
     if (!this.props.locked) {
       selector = (
-        <select onChange={this.handleChangeCalculation} defaultValue={this.state.calculate}>
-          <option key='speed' value='speed'>Speed</option>
-          <option key='time' value='time'>Time</option>
-          <option key='distance' value='distance'>Distance</option>
-        </select>
+        <tr>
+          <td><Form.Label>Calculate</Form.Label></td>
+          <td>
+            <Form.Select onChange={this.handleChangeCalculation} defaultValue={this.state.calculate}>
+              <option key='speed' value='speed'>Speed</option>
+              <option key='time' value='time'>Time</option>
+              <option key='distance' value='distance'>Distance</option>
+            </Form.Select>
+          </td>
+        </tr>
       )
     }
 
     return (
-      <>
-        {selector}
-        <label>Speed</label><SpeedUI speed={this.state.speed} updateSpeed={this.onChangeSpeed} locked={this.state.calculate === 'speed'} />
-        <label>Time</label><TimeUI time={this.state.time} updateTime={this.onChangeTime} locked={this.state.calculate === 'time'} />
-        <label>Distance</label><DistanceUI distance={this.state.distance} updateDistance={this.onChangeDistance} locked={this.state.calculate === 'distance'} />
-      </>
+      <Table>
+        <tbody>
+          {selector}
+          <tr><td><Form.Label>Speed</Form.Label></td><td><SpeedUI speed={this.state.speed} updateSpeed={this.onChangeSpeed} locked={this.state.calculate === 'speed'} /></td></tr>
+          <tr><td><Form.Label>Time</Form.Label></td><td><TimeUI time={this.state.time} updateTime={this.onChangeTime} locked={this.state.calculate === 'time'} /></td></tr>
+          <tr><td><Form.Label>Distance</Form.Label></td><td><DistanceUI distance={this.state.distance} updateDistance={this.onChangeDistance} locked={this.state.calculate === 'distance'} /></td></tr>
+        </tbody>
+      </Table>
     )
   }
 }
