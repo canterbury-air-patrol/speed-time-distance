@@ -196,19 +196,28 @@ class SpeedTimeDistanceUI extends React.Component {
     this.onChangeDistance = this.onChangeDistance.bind(this)
     this.handleChangeCalculation = this.handleChangeCalculation.bind(this)
     this.state = {
-      speed: new Speed(1, Speed.speedUnits[0]),
-      time: new Time(1),
-      distance: new Distance(1, Distance.distanceUnits[0]),
+      speed: this.props.speed !== undefined ? this.props.speed : new Speed(1, Speed.speedUnits[0]),
+      time: this.props.time !== undefined ? this.props.time : new Time(1),
+      distance: this.props.distance !== undefined ? this.props.distance : new Distance(1, Distance.distanceUnits[0]),
       calculate: this.props.calculate !== undefined ? this.props.calculate : 'distance'
     }
   }
 
   onChangeSpeed (newSpeed) {
     this.setState(function (oldState) {
+      if (this.props.updateSpeed !== undefined) {
+        this.props.updateSpeed(newSpeed)
+      }
       if (oldState.calculate === 'distance') {
         oldState.distance.setDistance(newSpeed.getSpeed('m/s') * oldState.time.getTime('seconds'), 'm')
+        if (this.props.updateDistance !== undefined) {
+          this.props.updateDistance(oldState.distance)
+        }
       } else if (oldState.calculate === 'time') {
         oldState.time.setTime(oldState.distance.getDistance('m') / oldState.speed.getSpeed('m/s'), 'seconds')
+        if (this.props.updateTime !== undefined) {
+          this.props.updateTime(oldState.time)
+        }
       }
       return {
         speed: newSpeed,
@@ -220,10 +229,19 @@ class SpeedTimeDistanceUI extends React.Component {
 
   onChangeTime (newTime) {
     this.setState(function (oldState) {
+      if (this.props.updateTime !== undefined) {
+        this.props.updateTime(newTime)
+      }
       if (oldState.calculate === 'distance') {
         oldState.distance.setDistance(oldState.speed.getSpeed('m/s') * oldState.time.getTime('seconds'), 'm')
+        if (this.props.updateDistance !== undefined) {
+          this.props.updateDistance(oldState.distance)
+        }
       } else if (oldState.calculate === 'speed') {
         oldState.speed.setSpeed(oldState.distance.getDistance('m') / newTime.getTime('seconds'), 'm/s')
+        if (this.props.updateSpeed !== undefined) {
+          this.props.updateSpeed(oldState.speed)
+        }
       }
       return {
         speed: oldState.speed,
@@ -235,10 +253,19 @@ class SpeedTimeDistanceUI extends React.Component {
 
   onChangeDistance (newDistance) {
     this.setState(function (oldState) {
+      if (this.props.updateDistance !== undefined) {
+        this.props.updateDistance(newDistance)
+      }
       if (oldState.calculate === 'time') {
         oldState.time.setTime(newDistance.getDistance('m') / oldState.speed.getSpeed('m/s'), 'seconds')
+        if (this.props.updateTime !== undefined) {
+          this.props.updateTime(oldState.time)
+        }
       } else if (oldState.calculate === 'speed') {
         oldState.speed.setSpeed(newDistance.getDistance('m') / oldState.time.getTime('seconds'), 'm/s')
+        if (this.props.updateSpeed !== undefined) {
+          this.props.updateSpeed(oldState.speed)
+        }
       }
       return {
         speed: oldState.speed,
@@ -258,7 +285,7 @@ class SpeedTimeDistanceUI extends React.Component {
 
   render () {
     let selector = null
-    if (!this.props.locked) {
+    if (!this.props.lockSelector) {
       selector = (
         <tr>
           <td><Form.Label>Calculate</Form.Label></td>
@@ -277,9 +304,9 @@ class SpeedTimeDistanceUI extends React.Component {
       <Table>
         <tbody>
           {selector}
-          <tr><td><Form.Label>Speed</Form.Label></td><td><SpeedUI speed={this.state.speed} updateSpeed={this.onChangeSpeed} locked={this.state.calculate === 'speed'} /></td></tr>
-          <tr><td><Form.Label>Time</Form.Label></td><td><TimeUI time={this.state.time} updateTime={this.onChangeTime} locked={this.state.calculate === 'time'} /></td></tr>
-          <tr><td><Form.Label>Distance</Form.Label></td><td><DistanceUI distance={this.state.distance} updateDistance={this.onChangeDistance} locked={this.state.calculate === 'distance'} /></td></tr>
+          <tr><td><Form.Label>Speed</Form.Label></td><td><SpeedUI speed={this.state.speed} updateSpeed={this.onChangeSpeed} locked={this.props.lockSpeed || this.state.calculate === 'speed'} /></td></tr>
+          <tr><td><Form.Label>Time</Form.Label></td><td><TimeUI time={this.state.time} updateTime={this.onChangeTime} locked={this.props.lockTime || this.state.calculate === 'time'} /></td></tr>
+          <tr><td><Form.Label>Distance</Form.Label></td><td><DistanceUI distance={this.state.distance} updateDistance={this.onChangeDistance} locked={this.props.lockDistance || this.state.calculate === 'distance'} /></td></tr>
         </tbody>
       </Table>
     )
@@ -287,7 +314,16 @@ class SpeedTimeDistanceUI extends React.Component {
 }
 SpeedTimeDistanceUI.propTypes = {
   calculate: PropTypes.string,
-  locked: PropTypes.bool
+  lockSelector: PropTypes.bool,
+  lockSpeed: PropTypes.bool,
+  lockTime: PropTypes.bool,
+  lockDistance: PropTypes.bool,
+  speed: PropTypes.object,
+  time: PropTypes.object,
+  distance: PropTypes.object,
+  updateSpeed: PropTypes.func,
+  updateTime: PropTypes.func,
+  updateDistance: PropTypes.func
 }
 
 export { SpeedUI, DistanceUI, TimeUI, SpeedTimeDistanceUI }
