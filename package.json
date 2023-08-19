@@ -1,6 +1,6 @@
 {
   "name": "@canterbury-air-patrol/speed-time-distance",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Speed Time Distance Calculator",
   "main": "speed-time-distance.js",
   "scripts": {

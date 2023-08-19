@@ -1,7 +1,7 @@
 class Speed {
   constructor (speed, units) {
     this.speed_m_s = 0.0
-    this.units = units
+    this.currentUnits = units
     this.setSpeed(speed, units)
   }
 
