@@ -1,5 +1,5 @@
 class Speed {
-  constructor (speed, units) {
+  constructor(speed, units) {
     this.speed_m_s = 0.0
     this.currentUnits = units
     this.setSpeed(speed, units)
@@ -12,32 +12,32 @@ class Speed {
     mph: 1609.344 / 3600
   }
 
-  speed_to_m_s (units) {
+  speed_to_m_s(units) {
     if (units in Speed.speedUnits) {
       return Speed.speedUnits[units]
     }
     return 1
   }
 
-  get speed () {
+  get speed() {
     return this.getSpeed(this.currentUnits)
   }
 
-  set speed (value) {
+  set speed(value) {
     this.setSpeed(value, this.currentUnits)
   }
 
-  getSpeed (units) {
+  getSpeed(units) {
     return this.speed_m_s / this.speed_to_m_s(units)
   }
 
-  setSpeed (speed, units) {
+  setSpeed(speed, units) {
     this.speed_m_s = speed * this.speed_to_m_s(units)
   }
 }
 
 class Distance {
-  constructor (distance, units) {
+  constructor(distance, units) {
     this.distance_m = 0
     this.currentUnits = units
     this.setDistance(distance, units)
@@ -52,32 +52,32 @@ class Distance {
     NM: 1852
   }
 
-  distance_units_to_m (units) {
+  distance_units_to_m(units) {
     if (units in Distance.distanceUnits) {
       return Distance.distanceUnits[units]
     }
     return 1
   }
 
-  get distance () {
+  get distance() {
     return this.distance_m / this.distance_units_to_m(this.currentUnits)
   }
 
-  set distance (value) {
+  set distance(value) {
     this.setDistance(value, this.currentUnits)
   }
 
-  getDistance (units) {
+  getDistance(units) {
     return this.distance_m / this.distance_units_to_m(units)
   }
 
-  setDistance (distance, units) {
+  setDistance(distance, units) {
     this.distance_m = distance * this.distance_units_to_m(units)
   }
 }
 
 class Time {
-  constructor (value, units) {
+  constructor(value, units) {
     this.timeSeconds = 0
     this.currentUnits = units
     this.setTime(value, units)
@@ -90,26 +90,26 @@ class Time {
     days: 86400
   }
 
-  get time () {
+  get time() {
     return this.getTime(this.currentUnits)
   }
 
-  set time (value) {
+  set time(value) {
     this.setTime(value, this.currentUnits)
   }
 
-  timeUnitsToSeconds (units) {
+  timeUnitsToSeconds(units) {
     if (units in Time.timeUnits) {
       return Time.timeUnits[units]
     }
     return 1
   }
 
-  getTime (units) {
+  getTime(units) {
     return this.timeSeconds / this.timeUnitsToSeconds(units)
   }
 
-  setTime (value, units) {
+  setTime(value, units) {
     this.timeSeconds = value * this.timeUnitsToSeconds(units)
   }
 }

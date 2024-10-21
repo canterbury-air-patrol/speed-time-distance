@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form'
 import { Speed, Distance, Time } from './speed-time-distance'
 
 class SpeedUI extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.handleChangeValue = this.handleChangeValue.bind(this)
     this.handleChangeUnits = this.handleChangeUnits.bind(this)
@@ -16,7 +16,7 @@ class SpeedUI extends React.Component {
     }
   }
 
-  handleChangeValue (event) {
+  handleChangeValue(event) {
     const target = event.target
     const value = target.value
 
@@ -31,7 +31,7 @@ class SpeedUI extends React.Component {
     })
   }
 
-  handleChangeUnits (event) {
+  handleChangeUnits(event) {
     const target = event.target
     const value = target.value
     this.setState(function (oldState) {
@@ -45,14 +45,18 @@ class SpeedUI extends React.Component {
     })
   }
 
-  render () {
+  render() {
     const units = []
     for (const key in Speed.speedUnits) {
-      units.push((<option key={key} value={key}>{key}</option>))
+      units.push(
+        <option key={key} value={key}>
+          {key}
+        </option>
+      )
     }
     return (
       <>
-        <Form.Control type='number' onChange={this.handleChangeValue} value={this.state.speed.speed} disabled={this.props.locked} />
+        <Form.Control type="number" onChange={this.handleChangeValue} value={this.state.speed.speed} disabled={this.props.locked} />
         <Form.Select onChange={this.handleChangeUnits} defaultValue={this.state.speed.currentUnits}>
           {units}
         </Form.Select>
@@ -67,7 +71,7 @@ SpeedUI.propTypes = {
 }
 
 class DistanceUI extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.handleChangeValue = this.handleChangeValue.bind(this)
     this.handleChangeUnits = this.handleChangeUnits.bind(this)
@@ -76,7 +80,7 @@ class DistanceUI extends React.Component {
     }
   }
 
-  handleChangeValue (event) {
+  handleChangeValue(event) {
     const target = event.target
     const value = target.value
 
@@ -91,7 +95,7 @@ class DistanceUI extends React.Component {
     })
   }
 
-  handleChangeUnits (event) {
+  handleChangeUnits(event) {
     const target = event.target
     const value = target.value
     this.setState(function (oldState) {
@@ -105,18 +109,20 @@ class DistanceUI extends React.Component {
     })
   }
 
-  render () {
+  render() {
     const units = []
     for (const key in Distance.distanceUnits) {
-      units.push((<option key={key} value={key}>{key}</option>))
+      units.push(
+        <option key={key} value={key}>
+          {key}
+        </option>
+      )
     }
 
     return (
       <>
-        <Form.Control type='number' onChange={this.handleChangeValue} value={this.state.distance.distance} disabled={this.props.locked} />
-        <Form.Select onChange={this.handleChangeUnits}>
-          {units}
-        </Form.Select>
+        <Form.Control type="number" onChange={this.handleChangeValue} value={this.state.distance.distance} disabled={this.props.locked} />
+        <Form.Select onChange={this.handleChangeUnits}>{units}</Form.Select>
       </>
     )
   }
@@ -128,7 +134,7 @@ DistanceUI.propTypes = {
 }
 
 class TimeUI extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.handleChangeValue = this.handleChangeValue.bind(this)
     this.handleChangeUnits = this.handleChangeUnits.bind(this)
@@ -137,7 +143,7 @@ class TimeUI extends React.Component {
     }
   }
 
-  handleChangeValue (event) {
+  handleChangeValue(event) {
     const target = event.target
     const value = target.value
 
@@ -152,7 +158,7 @@ class TimeUI extends React.Component {
     })
   }
 
-  handleChangeUnits (event) {
+  handleChangeUnits(event) {
     const target = event.target
     const value = target.value
     this.setState(function (oldState) {
@@ -166,15 +172,19 @@ class TimeUI extends React.Component {
     })
   }
 
-  render () {
+  render() {
     const units = []
     for (const key in Time.timeUnits) {
-      units.push((<option key={key} value={key}>{key}</option>))
+      units.push(
+        <option key={key} value={key}>
+          {key}
+        </option>
+      )
     }
 
     return (
       <>
-        <Form.Control type='number' onChange={this.handleChangeValue} value={this.state.time.time} disabled={this.props.locked} />
+        <Form.Control type="number" onChange={this.handleChangeValue} value={this.state.time.time} disabled={this.props.locked} />
         <Form.Select onChange={this.handleChangeUnits} defaultValue={this.state.time.currentUnits}>
           {units}
         </Form.Select>
@@ -189,7 +199,7 @@ TimeUI.propTypes = {
 }
 
 class SpeedTimeDistanceUI extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.onChangeSpeed = this.onChangeSpeed.bind(this)
     this.onChangeTime = this.onChangeTime.bind(this)
@@ -203,7 +213,7 @@ class SpeedTimeDistanceUI extends React.Component {
     }
   }
 
-  onChangeSpeed (newSpeed) {
+  onChangeSpeed(newSpeed) {
     this.setState(function (oldState) {
       if (this.props.updateSpeed !== undefined) {
         this.props.updateSpeed(newSpeed)
@@ -227,7 +237,7 @@ class SpeedTimeDistanceUI extends React.Component {
     })
   }
 
-  onChangeTime (newTime) {
+  onChangeTime(newTime) {
     this.setState(function (oldState) {
       if (this.props.updateTime !== undefined) {
         this.props.updateTime(newTime)
@@ -251,7 +261,7 @@ class SpeedTimeDistanceUI extends React.Component {
     })
   }
 
-  onChangeDistance (newDistance) {
+  onChangeDistance(newDistance) {
     this.setState(function (oldState) {
       if (this.props.updateDistance !== undefined) {
         this.props.updateDistance(newDistance)
@@ -275,7 +285,7 @@ class SpeedTimeDistanceUI extends React.Component {
     })
   }
 
-  handleChangeCalculation (event) {
+  handleChangeCalculation(event) {
     const target = event.target
     const value = target.value
     this.setState({
@@ -283,17 +293,25 @@ class SpeedTimeDistanceUI extends React.Component {
     })
   }
 
-  render () {
+  render() {
     let selector = null
     if (!this.props.lockSelector) {
       selector = (
         <tr>
-          <td><Form.Label>Calculate</Form.Label></td>
+          <td>
+            <Form.Label>Calculate</Form.Label>
+          </td>
           <td>
             <Form.Select onChange={this.handleChangeCalculation} defaultValue={this.state.calculate}>
-              <option key='speed' value='speed'>Speed</option>
-              <option key='time' value='time'>Time</option>
-              <option key='distance' value='distance'>Distance</option>
+              <option key="speed" value="speed">
+                Speed
+              </option>
+              <option key="time" value="time">
+                Time
+              </option>
+              <option key="distance" value="distance">
+                Distance
+              </option>
             </Form.Select>
           </td>
         </tr>
@@ -304,9 +322,30 @@ class SpeedTimeDistanceUI extends React.Component {
       <Table>
         <tbody>
           {selector}
-          <tr><td><Form.Label>Speed</Form.Label></td><td><SpeedUI speed={this.state.speed} updateSpeed={this.onChangeSpeed} locked={this.props.lockSpeed || this.state.calculate === 'speed'} /></td></tr>
-          <tr><td><Form.Label>Time</Form.Label></td><td><TimeUI time={this.state.time} updateTime={this.onChangeTime} locked={this.props.lockTime || this.state.calculate === 'time'} /></td></tr>
-          <tr><td><Form.Label>Distance</Form.Label></td><td><DistanceUI distance={this.state.distance} updateDistance={this.onChangeDistance} locked={this.props.lockDistance || this.state.calculate === 'distance'} /></td></tr>
+          <tr>
+            <td>
+              <Form.Label>Speed</Form.Label>
+            </td>
+            <td>
+              <SpeedUI speed={this.state.speed} updateSpeed={this.onChangeSpeed} locked={this.props.lockSpeed || this.state.calculate === 'speed'} />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Form.Label>Time</Form.Label>
+            </td>
+            <td>
+              <TimeUI time={this.state.time} updateTime={this.onChangeTime} locked={this.props.lockTime || this.state.calculate === 'time'} />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Form.Label>Distance</Form.Label>
+            </td>
+            <td>
+              <DistanceUI distance={this.state.distance} updateDistance={this.onChangeDistance} locked={this.props.lockDistance || this.state.calculate === 'distance'} />
+            </td>
+          </tr>
         </tbody>
       </Table>
     )
