@@ -1,49 +1,54 @@
 class Speed {
-  constructor(speed, units) {
+  speed_m_s: number
+  currentUnits: string
+  constructor(speed: number, units: string) {
     this.speed_m_s = 0.0
     this.currentUnits = units
     this.setSpeed(speed, units)
   }
 
-  static speedUnits = {
+  static speedUnits: { [key: string]: number } = {
     'm/s': 1 / 1,
     'km/hr': 1000 / 3600,
     knots: 1852 / 3600,
     mph: 1609.344 / 3600
   }
 
-  speed_to_m_s(units) {
+  speed_to_m_s(units: string) {
     if (units in Speed.speedUnits) {
       return Speed.speedUnits[units]
     }
     return 1
   }
 
-  get speed() {
+  get speed(): number {
     return this.getSpeed(this.currentUnits)
   }
 
-  set speed(value) {
+  set speed(value: number) {
     this.setSpeed(value, this.currentUnits)
   }
 
-  getSpeed(units) {
+  getSpeed(units: string): number {
     return this.speed_m_s / this.speed_to_m_s(units)
   }
 
-  setSpeed(speed, units) {
+  setSpeed(speed: number, units: string) {
     this.speed_m_s = speed * this.speed_to_m_s(units)
   }
 }
 
 class Distance {
-  constructor(distance, units) {
+  distance_m: number
+  currentUnits: string
+
+  constructor(distance: number, units: string) {
     this.distance_m = 0
     this.currentUnits = units
     this.setDistance(distance, units)
   }
 
-  static distanceUnits = {
+  static distanceUnits: { [key: string]: number } = {
     m: 1,
     cm: 1 / 100,
     mm: 1 / 1000,
@@ -52,64 +57,67 @@ class Distance {
     NM: 1852
   }
 
-  distance_units_to_m(units) {
+  distance_units_to_m(units: string) {
     if (units in Distance.distanceUnits) {
       return Distance.distanceUnits[units]
     }
     return 1
   }
 
-  get distance() {
+  get distance(): number {
     return this.distance_m / this.distance_units_to_m(this.currentUnits)
   }
 
-  set distance(value) {
+  set distance(value: number) {
     this.setDistance(value, this.currentUnits)
   }
 
-  getDistance(units) {
+  getDistance(units: string): number {
     return this.distance_m / this.distance_units_to_m(units)
   }
 
-  setDistance(distance, units) {
+  setDistance(distance: number, units: string): void {
     this.distance_m = distance * this.distance_units_to_m(units)
   }
 }
 
 class Time {
-  constructor(value, units) {
+  timeSeconds: number
+  currentUnits: string
+
+  constructor(value: number, units: string) {
     this.timeSeconds = 0
     this.currentUnits = units
     this.setTime(value, units)
   }
 
-  static timeUnits = {
+  static timeUnits: { [key: string]: number } = {
     seconds: 1,
     minutes: 60,
     hours: 3600,
     days: 86400
   }
 
-  get time() {
+  get time(): number {
     return this.getTime(this.currentUnits)
   }
 
-  set time(value) {
+  set time(value: number) {
     this.setTime(value, this.currentUnits)
   }
 
-  timeUnitsToSeconds(units) {
+  timeUnitsToSeconds(units: string) {
     if (units in Time.timeUnits) {
       return Time.timeUnits[units]
     }
     return 1
   }
 
-  getTime(units) {
+  getTime(units: string): number {
     return this.timeSeconds / this.timeUnitsToSeconds(units)
   }
 
-  setTime(value, units) {
+  setTime(value: number, units: string) {
     this.timeSeconds = value * this.timeUnitsToSeconds(units)
   }
 }
